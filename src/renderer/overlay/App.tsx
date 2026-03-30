@@ -4,6 +4,7 @@ import StatusIndicator from './components/StatusIndicator';
 import TranscriptView from './components/TranscriptView';
 import { useAudioCapture } from './hooks/useAudioCapture';
 import { useTranscript } from './hooks/useTranscript';
+import { useCoaching } from './hooks/useCoaching';
 
 declare global {
   interface Window {
@@ -28,6 +29,17 @@ export default function App() {
 
   const transcript = useTranscript();
   const audio = useAudioCapture(transcript.handlePCM);
+  const coaching = useCoaching();
+
+  // Feed finalized transcript entries to the coaching service
+  useEffect(() => {
+    if (transcript.lastFinal && isActive) {
+      coaching.onTranscriptEntry(
+        transcript.lastFinal,
+        transcript.getFormattedTranscript()
+      );
+    }
+  }, [transcript.lastFinal, isActive]);
 
   // Listen for hotkey toggles
   useEffect(() => {
@@ -43,21 +55,32 @@ export default function App() {
     };
   }, []);
 
-  // React to recording state changes — start/stop audio + transcription
+  // React to recording state changes — start/stop audio + transcription + coaching
   useEffect(() => {
     if (isRecording && !prevRecording.current) {
       (async () => {
+        // Configure coaching LLM provider
+        await coaching.configure();
+
+        // Start audio capture
         audio.startAll();
+
+        // Start transcription
         const apiKey = (await window.callCoach.getSettings('apiKeys.deepgram')) as string;
         if (apiKey) {
           transcript.start(apiKey);
         } else {
           console.warn('No Deepgram API key configured — transcription disabled');
         }
+
+        // Auto-enable coaching when recording starts
+        setIsActive(true);
       })();
     } else if (!isRecording && prevRecording.current) {
       audio.stopAll();
       transcript.stop();
+      coaching.cancel();
+      setIsActive(false);
     }
     prevRecording.current = isRecording;
   }, [isRecording]);
@@ -76,7 +99,12 @@ export default function App() {
           systemLevel={audio.systemLevel}
         />
         {isRecording && <TranscriptView entries={transcript.entries} />}
-        {isActive && <CoachingPanel />}
+        {isActive && (
+          <CoachingPanel
+            suggestions={coaching.suggestions}
+            isThinking={coaching.isThinking}
+          />
+        )}
       </div>
     </div>
   );

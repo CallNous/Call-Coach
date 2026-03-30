@@ -193,12 +193,18 @@ JSON files with: name, phases, keyword triggers, guidance prompts, output format
 - [x] `GeneralSettings` page: LLM provider selector + all API key fields
 - [ ] Full end-to-end test with real Deepgram key (pending live test)
 
-### Phase 4: LLM Coaching Engine (~1-2 sessions)
-- Build the `LLMProvider` interface and implement all 4 providers
-- Implement `CoachingService`: utterance → debounce (3s) → LLM call → stream to UI
-- Build prompt template with methodology injection
-- Provider selector + API key entry in settings
-- `CoachingCard` components with fade-in/fade-out animations
+### Phase 4: LLM Coaching Engine — DONE
+- [x] `LLMProvider` interface with shared SSE stream reader
+- [x] Gemini Flash-Lite provider (streaming via SSE)
+- [x] Grok Fast provider (OpenAI-compatible API)
+- [x] Claude Haiku provider (Anthropic Messages API with streaming)
+- [x] OpenAI GPT Mini provider (Chat Completions streaming)
+- [x] `CoachingService`: utterance → 3s debounce → LLM stream → parsed bullets → UI
+- [x] In-flight request cancellation when new utterance arrives
+- [x] System prompt with methodology injection, 2-4 bullet max 12-word rules
+- [x] `useCoaching` hook: configures provider from settings, feeds transcript, manages suggestion TTL (15s)
+- [x] `CoachingPanel` + `CoachingCard` wired to real streaming data
+- [x] Full pipeline: hotkey → audio → Deepgram STT → transcript → LLM → overlay suggestions
 
 ### Phase 5: Methodology & Polish (~1 session)
 - Create 5 built-in methodology JSON files

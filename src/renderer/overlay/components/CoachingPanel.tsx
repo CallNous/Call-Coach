@@ -1,22 +1,27 @@
 import React from 'react';
 import CoachingCard from './CoachingCard';
+import type { CoachingSuggestion } from '../../../shared/types';
 
-export default function CoachingPanel() {
-  // TODO: wire up real coaching suggestions from the coaching service
-  const placeholderSuggestions = [
-    {
-      id: '1',
-      bullets: ['Ask about their timeline for the decision', 'Explore budget constraints'],
-      timestamp: Date.now(),
-      methodology: 'MEDDIC',
-    },
-  ];
+interface Props {
+  suggestions: CoachingSuggestion[];
+  isThinking: boolean;
+}
+
+export default function CoachingPanel({ suggestions, isThinking }: Props) {
+  if (suggestions.length === 0 && !isThinking) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col gap-2">
-      {placeholderSuggestions.map((suggestion) => (
+      {suggestions.map((suggestion) => (
         <CoachingCard key={suggestion.id} suggestion={suggestion} />
       ))}
+      {isThinking && suggestions.length === 0 && (
+        <div className="rounded-lg bg-black/85 px-4 py-3 text-white/40 text-xs animate-pulse">
+          Thinking...
+        </div>
+      )}
     </div>
   );
 }
