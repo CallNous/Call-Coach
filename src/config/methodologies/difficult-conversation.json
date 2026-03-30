@@ -1,0 +1,33 @@
+{
+  "id": "difficult-conversation",
+  "name": "Difficult Conversation",
+  "description": "Navigate tough conversations with empathy and clarity",
+  "phases": [
+    {
+      "name": "Opening",
+      "keywords": ["need to talk", "discuss", "bring up", "address", "conversation"],
+      "guidance": "Lead with facts, not emotions. State the issue clearly and calmly."
+    },
+    {
+      "name": "Active Listening",
+      "keywords": ["feel", "think", "perspective", "understand", "hear you", "see your point"],
+      "guidance": "Listen fully before responding. Reflect back what you heard."
+    },
+    {
+      "name": "Emotional Escalation",
+      "keywords": ["frustrated", "angry", "upset", "unfair", "disappointed", "hurt"],
+      "guidance": "Acknowledge the emotion. Say: 'I understand this is frustrating.' Don't get defensive."
+    },
+    {
+      "name": "Problem Solving",
+      "keywords": ["solution", "fix", "resolve", "what can we", "going forward", "agree"],
+      "guidance": "Shift to solutions. Ask: What would a good outcome look like for both of us?"
+    },
+    {
+      "name": "Commitment",
+      "keywords": ["commit", "agree", "next step", "follow up", "promise", "plan"],
+      "guidance": "Lock in specific next steps. Summarize what was agreed and by when."
+    }
+  ],
+  "outputFormat": "2-4 bullets on how to respond with empathy and clarity"
+}

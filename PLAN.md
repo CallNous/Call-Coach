@@ -206,13 +206,15 @@ JSON files with: name, phases, keyword triggers, guidance prompts, output format
 - [x] `CoachingPanel` + `CoachingCard` wired to real streaming data
 - [x] Full pipeline: hotkey → audio → Deepgram STT → transcript → LLM → overlay suggestions
 
-### Phase 5: Methodology & Polish (~1 session)
-- Create 5 built-in methodology JSON files
-- Methodology editor in settings (create/edit/delete)
-- Methodology selector (keyboard shortcut + dropdown)
-- Overlay customization (opacity, position, max suggestions, bullet length)
-- Persist all settings via `electron-store`
-- Error handling, edge cases, loading states
+### Phase 5: Methodology & Polish — DONE
+- [x] 5 built-in methodology JSONs: MEDDIC, Discovery Call, QBR, Interview, Difficult Conversation
+- [x] `MethodologyService`: loads built-in + custom, cycle/select/save/delete, builds LLM prompt
+- [x] `MethodologyEditor` settings page: list, select active, create/edit/delete custom methodologies
+- [x] `OverlaySettings` page: opacity slider, max suggestions, display duration, keyboard shortcut reference
+- [x] Methodology cycling via Ctrl+Shift+M hotkey — updates coaching prompt in real-time
+- [x] Methodology name displayed in overlay status bar
+- [x] All 4 settings pages fully wired (General, Audio, Methodologies, Overlay)
+- [x] All settings persisted via `electron-store`
 
 ### Phase 6: Product Packaging (~1 session)
 - Electron Builder config for Windows (.exe installer) + Mac (.dmg)

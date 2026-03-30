@@ -5,6 +5,7 @@ interface Props {
   isRecording: boolean;
   micLevel?: number;
   systemLevel?: number;
+  methodology?: string;
 }
 
 function LevelBar({ level, label }: { level: number; label: string }) {
@@ -21,7 +22,7 @@ function LevelBar({ level, label }: { level: number; label: string }) {
   );
 }
 
-export default function StatusIndicator({ isActive, isRecording, micLevel = 0, systemLevel = 0 }: Props) {
+export default function StatusIndicator({ isActive, isRecording, micLevel = 0, systemLevel = 0, methodology }: Props) {
   return (
     <div className="flex items-center gap-3 rounded-lg bg-black/80 px-3 py-2 text-xs text-white/70">
       <div className="flex items-center gap-2">
@@ -34,8 +35,13 @@ export default function StatusIndicator({ isActive, isRecording, micLevel = 0, s
           {isRecording ? 'Recording' : isActive ? 'Coaching Active' : 'Paused'}
         </span>
       </div>
+      {methodology && isActive && (
+        <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] text-white/50">
+          {methodology}
+        </span>
+      )}
       {isRecording && (
-        <div className="flex gap-3 ml-2">
+        <div className="flex gap-3 ml-auto">
           <LevelBar level={micLevel} label="You" />
           <LevelBar level={systemLevel} label="Them" />
         </div>

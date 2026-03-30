@@ -1,0 +1,33 @@
+{
+  "id": "discovery",
+  "name": "Discovery Call",
+  "description": "Open-ended exploration of prospect needs, goals, and current situation",
+  "phases": [
+    {
+      "name": "Current State",
+      "keywords": ["today", "currently", "right now", "existing", "using", "how do you"],
+      "guidance": "Understand their current situation. Ask: How are you handling this today?"
+    },
+    {
+      "name": "Goals",
+      "keywords": ["goal", "objective", "want", "hope", "trying to", "ideal", "vision"],
+      "guidance": "Uncover desired outcomes. Ask: What does success look like for you?"
+    },
+    {
+      "name": "Challenges",
+      "keywords": ["challenge", "obstacle", "blocker", "prevent", "hard", "difficult"],
+      "guidance": "Surface blockers. Ask: What's preventing you from achieving that today?"
+    },
+    {
+      "name": "Impact",
+      "keywords": ["impact", "affect", "cost", "consequence", "result", "matter"],
+      "guidance": "Quantify the impact. Ask: How does this affect your team/revenue/timeline?"
+    },
+    {
+      "name": "Next Steps",
+      "keywords": ["next", "plan", "timeline", "when", "ready", "move forward"],
+      "guidance": "Establish momentum. Ask: What would a good next step look like?"
+    }
+  ],
+  "outputFormat": "2-4 open-ended questions to deepen understanding"
+}

@@ -5,6 +5,8 @@ import TranscriptView from './components/TranscriptView';
 import { useAudioCapture } from './hooks/useAudioCapture';
 import { useTranscript } from './hooks/useTranscript';
 import { useCoaching } from './hooks/useCoaching';
+import { methodologyService } from '../../services/methodology';
+import { coachingService } from '../../services/coaching';
 
 declare global {
   interface Window {
@@ -25,11 +27,26 @@ declare global {
 export default function App() {
   const [isActive, setIsActive] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [methodology, setMethodology] = useState('MEDDIC');
   const prevRecording = useRef(false);
 
   const transcript = useTranscript();
   const audio = useAudioCapture(transcript.handlePCM);
   const coaching = useCoaching();
+
+  // Load methodology on mount
+  useEffect(() => {
+    (async () => {
+      await methodologyService.loadCustom();
+      const stored = (await window.callCoach.getSettings('methodology')) as string;
+      if (stored) methodologyService.setActive(stored);
+      const active = methodologyService.getActive();
+      if (active) {
+        setMethodology(active.name);
+        coachingService.setMethodology(active.name, methodologyService.buildPrompt());
+      }
+    })();
+  }, []);
 
   // Feed finalized transcript entries to the coaching service
   useEffect(() => {
@@ -49,9 +66,15 @@ export default function App() {
     const unsubRecording = window.callCoach.onRecordingToggle(() => {
       setIsRecording((prev) => !prev);
     });
+    const unsubMethodology = window.callCoach.onMethodologyCycle(() => {
+      const next = methodologyService.cycleNext();
+      setMethodology(next.name);
+      coachingService.setMethodology(next.name, methodologyService.buildPrompt());
+    });
     return () => {
       unsubCoaching();
       unsubRecording();
+      unsubMethodology();
     };
   }, []);
 
@@ -59,8 +82,12 @@ export default function App() {
   useEffect(() => {
     if (isRecording && !prevRecording.current) {
       (async () => {
-        // Configure coaching LLM provider
+        // Configure coaching LLM provider + methodology
         await coaching.configure();
+        const active = methodologyService.getActive();
+        if (active) {
+          coachingService.setMethodology(active.name, methodologyService.buildPrompt());
+        }
 
         // Start audio capture
         audio.startAll();
@@ -97,6 +124,7 @@ export default function App() {
           isRecording={isRecording}
           micLevel={audio.micLevel}
           systemLevel={audio.systemLevel}
+          methodology={methodology}
         />
         {isRecording && <TranscriptView entries={transcript.entries} />}
         {isActive && (

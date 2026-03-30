@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import GeneralSettings from './pages/GeneralSettings';
 import AudioSettings from './pages/AudioSettings';
+import MethodologyEditor from './pages/MethodologyEditor';
+import OverlaySettings from './pages/OverlaySettings';
 
 type Tab = 'general' | 'audio' | 'methodology' | 'overlay';
 
@@ -35,48 +37,12 @@ export default function App() {
           ))}
         </ul>
       </nav>
-      <main className="flex-1 p-6">
+      <main className="flex-1 overflow-y-auto p-6">
         {activeTab === 'general' && <GeneralSettings />}
         {activeTab === 'audio' && <AudioSettings />}
-        {activeTab === 'methodology' && <MethodologyPlaceholder />}
-        {activeTab === 'overlay' && <OverlayPlaceholder />}
+        {activeTab === 'methodology' && <MethodologyEditor />}
+        {activeTab === 'overlay' && <OverlaySettings />}
       </main>
-    </div>
-  );
-}
-
-function GeneralPlaceholder() {
-  return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">General Settings</h2>
-      <p className="text-gray-400">LLM provider selection and API keys will go here.</p>
-    </div>
-  );
-}
-
-function AudioPlaceholder() {
-  return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">Audio Settings</h2>
-      <p className="text-gray-400">Microphone selection and audio configuration will go here.</p>
-    </div>
-  );
-}
-
-function MethodologyPlaceholder() {
-  return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">Methodologies</h2>
-      <p className="text-gray-400">Methodology editor and selector will go here.</p>
-    </div>
-  );
-}
-
-function OverlayPlaceholder() {
-  return (
-    <div>
-      <h2 className="mb-4 text-xl font-semibold">Overlay Settings</h2>
-      <p className="text-gray-400">Opacity, position, and display options will go here.</p>
     </div>
   );
 }

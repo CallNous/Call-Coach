@@ -1,0 +1,33 @@
+{
+  "id": "qbr",
+  "name": "Quarterly Business Review",
+  "description": "Structured review of account health, results, and forward planning",
+  "phases": [
+    {
+      "name": "Results Review",
+      "keywords": ["results", "performance", "achieved", "numbers", "quarter", "metrics"],
+      "guidance": "Review outcomes. Ask: What results stood out this quarter?"
+    },
+    {
+      "name": "Value Delivered",
+      "keywords": ["value", "ROI", "benefit", "helped", "improved", "saved"],
+      "guidance": "Reinforce value. Ask: How has our solution impacted your key metrics?"
+    },
+    {
+      "name": "Challenges Faced",
+      "keywords": ["issue", "problem", "challenge", "concern", "support", "frustrated"],
+      "guidance": "Address concerns early. Ask: What challenges have you faced with our solution?"
+    },
+    {
+      "name": "Goals Ahead",
+      "keywords": ["next quarter", "plan", "goal", "priority", "focus", "roadmap"],
+      "guidance": "Align on future. Ask: What are your top priorities for next quarter?"
+    },
+    {
+      "name": "Expansion",
+      "keywords": ["grow", "expand", "more", "additional", "team", "department", "upgrade"],
+      "guidance": "Explore growth. Ask: Are there other teams that could benefit from this?"
+    }
+  ],
+  "outputFormat": "2-4 bullets to guide the QBR conversation forward"
+}

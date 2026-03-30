@@ -1,0 +1,38 @@
+{
+  "id": "meddic",
+  "name": "MEDDIC",
+  "description": "Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion",
+  "phases": [
+    {
+      "name": "Metrics",
+      "keywords": ["ROI", "revenue", "cost", "savings", "numbers", "measure", "KPI"],
+      "guidance": "Quantify the business impact. Ask: What metrics would improve? By how much?"
+    },
+    {
+      "name": "Economic Buyer",
+      "keywords": ["budget", "approve", "sign off", "decision maker", "authority", "CFO", "VP"],
+      "guidance": "Identify who controls the budget. Ask: Who ultimately approves this purchase?"
+    },
+    {
+      "name": "Decision Criteria",
+      "keywords": ["requirements", "criteria", "evaluate", "compare", "features", "must have"],
+      "guidance": "Understand how they'll evaluate. Ask: What criteria will you use to make this decision?"
+    },
+    {
+      "name": "Decision Process",
+      "keywords": ["timeline", "process", "steps", "approval", "committee", "next steps"],
+      "guidance": "Map the buying process. Ask: Walk me through your decision-making process."
+    },
+    {
+      "name": "Identify Pain",
+      "keywords": ["challenge", "problem", "frustration", "pain", "issue", "struggle", "difficult"],
+      "guidance": "Uncover and quantify pain. Ask: What happens if this problem isn't solved?"
+    },
+    {
+      "name": "Champion",
+      "keywords": ["advocate", "internal", "support", "champion", "sponsor", "ally"],
+      "guidance": "Build an internal champion. Ask: Who else on your team sees this as a priority?"
+    }
+  ],
+  "outputFormat": "2-4 actionable bullets focused on uncovering MEDDIC gaps"
+}

@@ -1,0 +1,33 @@
+{
+  "id": "interview",
+  "name": "Job Interview",
+  "description": "Structured behavioral and situational interview coaching",
+  "phases": [
+    {
+      "name": "Rapport Building",
+      "keywords": ["tell me about", "background", "introduce", "yourself", "experience"],
+      "guidance": "Build connection. Be concise but personable in your introduction."
+    },
+    {
+      "name": "Behavioral Questions",
+      "keywords": ["time when", "example", "situation", "describe", "tell me about a"],
+      "guidance": "Use STAR format: Situation, Task, Action, Result. Be specific with numbers."
+    },
+    {
+      "name": "Technical/Role Fit",
+      "keywords": ["how would you", "approach", "solve", "handle", "strategy", "process"],
+      "guidance": "Demonstrate structured thinking. Walk through your approach step by step."
+    },
+    {
+      "name": "Culture Fit",
+      "keywords": ["team", "conflict", "disagree", "feedback", "collaborate", "culture"],
+      "guidance": "Show self-awareness and growth mindset. Give honest, reflective answers."
+    },
+    {
+      "name": "Candidate Questions",
+      "keywords": ["questions for us", "anything to ask", "want to know", "curious about"],
+      "guidance": "Ask thoughtful questions about the role, team, and company direction."
+    }
+  ],
+  "outputFormat": "2-4 coaching bullets on what to say or ask next"
+}
