@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CoachingPanel from './components/CoachingPanel';
 import StatusIndicator from './components/StatusIndicator';
+import TranscriptView from './components/TranscriptView';
 import { useAudioCapture } from './hooks/useAudioCapture';
+import { useTranscript } from './hooks/useTranscript';
 
 declare global {
   interface Window {
@@ -22,33 +24,43 @@ declare global {
 export default function App() {
   const [isActive, setIsActive] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const prevRecording = useRef(false);
 
-  const handlePCM = useCallback((source: 'mic' | 'system', buffer: ArrayBuffer) => {
-    // Will be wired to transcription service in Phase 3
-  }, []);
+  const transcript = useTranscript();
+  const audio = useAudioCapture(transcript.handlePCM);
 
-  const audio = useAudioCapture(handlePCM);
-
+  // Listen for hotkey toggles
   useEffect(() => {
     const unsubCoaching = window.callCoach.onCoachingToggle(() => {
       setIsActive((prev) => !prev);
     });
     const unsubRecording = window.callCoach.onRecordingToggle(() => {
-      setIsRecording((prev) => {
-        const next = !prev;
-        if (next) {
-          audio.startAll();
-        } else {
-          audio.stopAll();
-        }
-        return next;
-      });
+      setIsRecording((prev) => !prev);
     });
     return () => {
       unsubCoaching();
       unsubRecording();
     };
-  }, [audio.startAll, audio.stopAll]);
+  }, []);
+
+  // React to recording state changes — start/stop audio + transcription
+  useEffect(() => {
+    if (isRecording && !prevRecording.current) {
+      (async () => {
+        audio.startAll();
+        const apiKey = (await window.callCoach.getSettings('apiKeys.deepgram')) as string;
+        if (apiKey) {
+          transcript.start(apiKey);
+        } else {
+          console.warn('No Deepgram API key configured — transcription disabled');
+        }
+      })();
+    } else if (!isRecording && prevRecording.current) {
+      audio.stopAll();
+      transcript.stop();
+    }
+    prevRecording.current = isRecording;
+  }, [isRecording]);
 
   return (
     <div
@@ -63,6 +75,7 @@ export default function App() {
           micLevel={audio.micLevel}
           systemLevel={audio.systemLevel}
         />
+        {isRecording && <TranscriptView entries={transcript.entries} />}
         {isActive && <CoachingPanel />}
       </div>
     </div>

@@ -183,11 +183,15 @@ JSON files with: name, phases, keyword triggers, guidance prompts, output format
 - [x] `useAudioCapture` hook wires recording toggle to start/stop both streams
 - [ ] Full end-to-end test on Windows + Mac (pending live test)
 
-### Phase 3: Transcription (~1 session)
-- Set up Deepgram, implement dual WebSocket connections
-- Pipe PCM audio to Deepgram, display labeled transcript (`[You]`/`[Them]`) in overlay
-- Build `TranscriptManager` with rolling buffer + periodic summarization
-- Handle reconnection on disconnect
+### Phase 3: Transcription — DONE
+- [x] `TranscriptionService` with dual Deepgram WebSocket connections (Nova-3, streaming)
+- [x] PCM audio piped from `AudioCaptureService` → Deepgram via `useTranscript.handlePCM`
+- [x] `TranscriptManager` with rolling 5-min buffer, interim replacement, old-entry summarization
+- [x] Live `TranscriptView` component with `[You]`/`[Them]` labeled entries in overlay
+- [x] Auto-reconnect with exponential backoff (max 5 attempts)
+- [x] `electron-store` persistence for all settings (API keys, provider, audio, overlay)
+- [x] `GeneralSettings` page: LLM provider selector + all API key fields
+- [ ] Full end-to-end test with real Deepgram key (pending live test)
 
 ### Phase 4: LLM Coaching Engine (~1-2 sessions)
 - Build the `LLMProvider` interface and implement all 4 providers
