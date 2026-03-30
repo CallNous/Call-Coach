@@ -1,8 +1,11 @@
-import { app, BrowserWindow, globalShortcut } from 'electron';
+import { app, BrowserWindow, globalShortcut, ipcMain } from 'electron';
 import { initMain } from 'electron-audio-loopback';
+import { autoUpdater } from 'electron-updater';
+import Store from 'electron-store';
 import path from 'path';
 import { createOverlayWindow } from './overlay-window';
 import { createSettingsWindow } from './settings-window';
+import { createOnboardingWindow } from './onboarding-window';
 import { registerShortcuts } from './shortcuts';
 import { setupTray } from './tray';
 import { registerIpcHandlers } from './ipc-handlers';
@@ -12,10 +15,16 @@ initMain();
 
 let overlayWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;
+let onboardingWindow: BrowserWindow | null = null;
 
 const isDev = !app.isPackaged;
 
-function createWindows() {
+const appStore = new Store({
+  name: 'call-coach-app',
+  defaults: { 'onboardingComplete': false },
+});
+
+function launchMainApp() {
   overlayWindow = createOverlayWindow(isDev);
   registerIpcHandlers(overlayWindow);
   registerShortcuts(overlayWindow, () => {
@@ -38,6 +47,37 @@ function createWindows() {
       });
     }
   });
+
+  // Check for updates (silent, non-intrusive)
+  if (!isDev) {
+    autoUpdater.checkForUpdatesAndNotify();
+  }
+}
+
+function createWindows() {
+  const isFirstRun = !appStore.get('onboardingComplete');
+
+  // Handle finish-onboarding IPC from onboarding window
+  ipcMain.on('onboarding:finish', () => {
+    appStore.set('onboardingComplete', true);
+    if (onboardingWindow && !onboardingWindow.isDestroyed()) {
+      onboardingWindow.close();
+    }
+    onboardingWindow = null;
+    launchMainApp();
+  });
+
+  if (isFirstRun) {
+    onboardingWindow = createOnboardingWindow(isDev);
+    onboardingWindow.on('closed', () => {
+      // If closed without finishing, quit the app
+      if (!appStore.get('onboardingComplete')) {
+        app.quit();
+      }
+    });
+  } else {
+    launchMainApp();
+  }
 }
 
 app.whenReady().then(createWindows);

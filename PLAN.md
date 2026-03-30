@@ -216,12 +216,16 @@ JSON files with: name, phases, keyword triggers, guidance prompts, output format
 - [x] All 4 settings pages fully wired (General, Audio, Methodologies, Overlay)
 - [x] All settings persisted via `electron-store`
 
-### Phase 6: Product Packaging (~1 session)
-- Electron Builder config for Windows (.exe installer) + Mac (.dmg)
-- Auto-updater setup
-- First-run onboarding flow (select mic, enter API keys, pick methodology)
-- App icon and branding
-- Code signing (optional but recommended for distribution)
+### Phase 6: Product Packaging — DONE
+- [x] Electron Builder config for Windows (.exe installer) + Mac (.dmg) + Linux (.AppImage)
+- [x] Auto-updater setup (`electron-updater` integrated, checks on launch in production)
+- [x] First-run onboarding flow: 5-step wizard (Welcome → Microphone → API Keys → Methodology → Done)
+- [x] Onboarding window with first-run detection via `electron-store` flag
+- [x] App icon and branding (256x256 PNG, ICO, 16x16 tray icon)
+- [x] Build scripts: `build:win`, `build:mac`, `build:linux`, `build:all`
+- [x] Vite build succeeds with all 3 renderer pages (overlay, settings, onboarding)
+- [ ] Code signing (optional — recommended before public distribution)
+- [ ] Full end-to-end test of packaged installer on Windows + Mac
 
 ---
 

@@ -33,4 +33,7 @@ contextBridge.exposeInMainWorld('callCoach', {
     ipcRenderer.on('recording:toggle', callback);
     return () => ipcRenderer.removeListener('recording:toggle', callback);
   },
+
+  // Onboarding
+  finishOnboarding: () => ipcRenderer.send('onboarding:finish'),
 });
