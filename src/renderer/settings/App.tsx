@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AudioSettings from './pages/AudioSettings';
 
 type Tab = 'general' | 'audio' | 'methodology' | 'overlay';
 
@@ -35,7 +36,7 @@ export default function App() {
       </nav>
       <main className="flex-1 p-6">
         {activeTab === 'general' && <GeneralPlaceholder />}
-        {activeTab === 'audio' && <AudioPlaceholder />}
+        {activeTab === 'audio' && <AudioSettings />}
         {activeTab === 'methodology' && <MethodologyPlaceholder />}
         {activeTab === 'overlay' && <OverlayPlaceholder />}
       </main>

@@ -1,10 +1,14 @@
 import { app, BrowserWindow, globalShortcut } from 'electron';
+import { initMain } from 'electron-audio-loopback';
 import path from 'path';
 import { createOverlayWindow } from './overlay-window';
 import { createSettingsWindow } from './settings-window';
 import { registerShortcuts } from './shortcuts';
 import { setupTray } from './tray';
 import { registerIpcHandlers } from './ipc-handlers';
+
+// Must be called BEFORE app.ready() for system audio loopback
+initMain();
 
 let overlayWindow: BrowserWindow | null = null;
 let settingsWindow: BrowserWindow | null = null;

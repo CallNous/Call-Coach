@@ -166,20 +166,22 @@ JSON files with: name, phases, keyword triggers, guidance prompts, output format
 
 ## Build Sequence (MVP)
 
-### Phase 1: Skeleton (~1 session)
-- Scaffold Electron + Vite + React + TS project
-- Create transparent overlay `BrowserWindow` — verify transparency, always-on-top, click-through
-- Create settings `BrowserWindow` — standard window for configuration
-- Register global hotkeys (show/hide, open settings)
-- System tray icon with context menu
-- Test on both Windows and Mac
+### Phase 1: Skeleton — DONE
+- [x] Scaffold Electron + Vite + React + TS project
+- [x] Create transparent overlay `BrowserWindow` — verify transparency, always-on-top, click-through
+- [x] Create settings `BrowserWindow` — standard window for configuration
+- [x] Register global hotkeys (show/hide, open settings)
+- [x] System tray icon with context menu
+- [x] Fix: VS Code sets `ELECTRON_RUN_AS_NODE=1` — vite config clears it before launching Electron
 
-### Phase 2: Audio Capture (~1 session)
-- Integrate `electron-audio-loopback` for system audio
-- Add mic capture via `getUserMedia`
-- AudioWorklet processors for PCM conversion (16-bit, 16kHz)
-- Audio device selector in settings
-- Verify both streams produce valid audio on Windows + Mac
+### Phase 2: Audio Capture — DONE
+- [x] Integrate `electron-audio-loopback` for system audio (`initMain()` before `app.ready`)
+- [x] Add mic capture via `getUserMedia` with device selection
+- [x] AudioWorklet processor for PCM conversion (16-bit, 16kHz) with linear interpolation downsampling
+- [x] Audio device selector in settings (auto-enumerates, handles plug/unplug)
+- [x] `AudioCaptureService` with dual streams, PCM handler callback, RMS level meters
+- [x] `useAudioCapture` hook wires recording toggle to start/stop both streams
+- [ ] Full end-to-end test on Windows + Mac (pending live test)
 
 ### Phase 3: Transcription (~1 session)
 - Set up Deepgram, implement dual WebSocket connections

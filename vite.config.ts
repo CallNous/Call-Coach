@@ -22,7 +22,7 @@ export default defineConfig({
           build: {
             outDir: 'dist/main',
             rollupOptions: {
-              external: ['electron', 'electron-store'],
+              external: ['electron', 'electron-store', 'electron-audio-loopback'],
             },
           },
         },
